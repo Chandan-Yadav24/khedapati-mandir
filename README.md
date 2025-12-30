@@ -291,5 +291,4 @@ This is a **practice/learning project** created for educational purposes only. I
 ---
 
 **Built for practice and learning.**  
-*Happy Coding! 🚀rn web technologies.**  
-*Jai Shri Khedapati Sarkar! 🙏*
+*Happy Coding! 🚀rn web technologies.**
