@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puja Booking | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .puja-booking-page {
+            padding: 100px 0 80px;
+            background: var(--color-light-gray);
+        }
+
+        .puja-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .puja-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .puja-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .puja-type-card {
+            background: var(--color-white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-top: 4px solid var(--color-saffron);
+            cursor: pointer;
+        }
+
+        .puja-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-top-color: var(--color-primary);
+        }
+
+        .puja-type-card.selected {
+            border-top-color: var(--color-primary);
+            background: var(--color-cream);
+        }
+
+        .puja-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--color-saffron), var(--color-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--color-white);
+            margin-bottom: 20px;
+        }
+
+        .puja-type-card h3 {
+            font-size: 1.4rem;
+            color: var(--color-dark);
+            margin-bottom: 12px;
+        }
+
+        .puja-type-card p {
+            color: var(--color-text);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .puja-price {
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .puja-duration {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .booking-form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            display: none;
+        }
+
+        .booking-form-container.active {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .selected-puja-info {
+            background: var(--color-cream);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .selected-puja-info h3 {
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+
+        .info-note {
+            background: #FFF3CD;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #FFB900;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="puja-booking-page">
+        <div class="container">
+            <div class="puja-header">
+                <h1>Book a Puja</h1>
+                <p>पूजा बुकिंग • Schedule sacred rituals performed by our priests</p>
+            </div>
+
+            <!-- Puja Types Selection -->
+            <div class="puja-types-grid" id="pujaTypesGrid">
+                <div class="puja-type-card" data-puja="Rudrabhishek" data-price="2100">
+                    <div class="puja-icon">
+                        <i class="fas fa-om"></i>
+                    </div>
+                    <h3>Rudrabhishek</h3>
+                    <p>Sacred abhishek of Lord Shiva with special mantras and offerings</p>
+                    <div class="puja-price">₹2,100</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 2-3 hours</span>
+                    </div>
+                </div>
+
+                <div class="puja-type-card" data-puja="Satyanarayan Puja" data-price="1501">
+                    <div class="puja-icon">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <h3>Satyanarayan Puja</h3>
+                    <p>Worship of Lord Vishnu for peace, prosperity, and happiness</p>
+                    <div class="puja-price">₹1,501</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 1.5-2 hours</span>
+                    </div>
+                </div>
+
+                <div class="puja-type-card" data-puja="Hanuman Chalisa Path" data-price="501">
+                    <div class="puja-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Hanuman Chalisa Path</h3>
+                    <p>Recitation of Hanuman Chalisa for strength and protection</p>
+                    <div class="puja-price">₹501</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 30-45 minutes</span>
+                    </div>
+                </div>
+
+                <div class="puja-type-card" data-puja="Lakshmi Puja" data-price="1101">
+                    <div class="puja-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Lakshmi Puja</h3>
+                    <p>Worship of Goddess Lakshmi for wealth and prosperity</p>
+                    <div class="puja-price">₹1,101</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 1-1.5 hours</span>
+                    </div>
+                </div>
+
+                <div class="puja-type-card" data-puja="Ganesh Puja" data-price="751">
+                    <div class="puja-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Ganesh Puja</h3>
+                    <p>Invoke Lord Ganesha's blessings to remove obstacles</p>
+                    <div class="puja-price">₹751</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 1 hour</span>
+                    </div>
+                </div>
+
+                <div class="puja-type-card" data-puja="Special Havan" data-price="3001">
+                    <div class="puja-icon">
+                        <i class="fas fa-fire-alt"></i>
+                    </div>
+                    <h3>Special Havan</h3>
+                    <p>Sacred fire ceremony with Vedic mantras and offerings</p>
+                    <div class="puja-price">₹3,001</div>
+                    <div class="puja-duration">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 3-4 hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="booking-form-container" id="bookingFormContainer">
+                <h2>Complete Your Booking</h2>
+                
+                <div class="selected-puja-info">
+                    <h3>Selected Puja: <span id="selectedPujaName"></span></h3>
+                    <p>Amount: <strong style="color: var(--color-primary);" id="selectedPujaPrice"></strong></p>
+                </div>
+
+                <form id="pujaBookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-input" id="bookerName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Gotra (if known)</label>
+                            <input type="text" class="form-input" id="bookerGotra">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" id="bookerEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-input" id="bookerPhone" required placeholder="+91">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Preferred Date *</label>
+                            <input type="date" class="form-input" id="pujaDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Preferred Time *</label>
+                            <select class="form-select" id="pujaTime" required>
+                                <option value="">Select time</option>
+                                <option value="06:00">6:00 AM - Morning</option>
+                                <option value="09:00">9:00 AM - Late Morning</option>
+                                <option value="12:00">12:00 PM - Noon</option>
+                                <option value="16:00">4:00 PM - Evening</option>
+                                <option value="18:00">6:00 PM - Evening Aarti</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sankalp / Intention *</label>
+                        <textarea class="form-textarea" id="pujaIntention" required placeholder="e.g., For family well-being, success in business, etc."></textarea>
+                    </div>
+
+                    <div class="info-note">
+                        <strong><i class="fas fa-info-circle"></i> Note:</strong> Puja bookings are subject to availability. You will receive a confirmation call/email within 24 hours to confirm the exact date and time.
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ePrasad">
+                        <label for="ePrasad">I would like to receive prasad by post (₹150 additional charges apply)</label>
+                    </div>
+
+                                        <div id="prasadAddressSection" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Delivery Address for Prasad</label>
+                            <textarea class="form-textarea" id="prasadAddress" placeholder="Enter complete postal address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Special Requests (Optional)</label>
+                        <textarea class="form-textarea" id="specialRequests" placeholder="Any specific requirements or dedications"></textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeBookingTerms" required>
+                        <label for="agreeBookingTerms">I agree to the booking terms and conditions *</label>
+                    </div>
+
+                    <div class="terms-text">
+                        <strong>Booking Terms:</strong> Advance booking required at least 2 days prior. Cancellations must be made 24 hours in advance for full refund. The temple reserves the right to reschedule pujas due to special events or circumstances. You will be notified in advance.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-check-circle"></i> Confirm Booking & Proceed to Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 XXX XXX XXXX</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Puja booking page specific JavaScript
+        const pujaCards = document.querySelectorAll('.puja-type-card');
+        const bookingFormContainer = document.getElementById('bookingFormContainer');
+        const selectedPujaName = document.getElementById('selectedPujaName');
+        const selectedPujaPrice = document.getElementById('selectedPujaPrice');
+        const ePrasadCheckbox = document.getElementById('ePrasad');
+        const prasadAddressSection = document.getElementById('prasadAddressSection');
+        const pujaDateInput = document.getElementById('pujaDate');
+
+        let selectedPuja = null;
+        let selectedPrice = 0;
+
+        // Set minimum date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 2);
+        pujaDateInput.min = tomorrow.toISOString().split('T')[0];
+
+        // Puja card selection
+        pujaCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                pujaCards.forEach(c => c.classList.remove('selected'));
+                
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                
+                // Get puja details
+                selectedPuja = this.dataset.puja;
+                selectedPrice = parseInt(this.dataset.price);
+                
+                // Update form
+                selectedPujaName.textContent = selectedPuja;
+                selectedPujaPrice.textContent = '₹' + selectedPrice;
+                
+                // Show booking form
+                bookingFormContainer.classList.add('active');
+                bookingFormContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // E-Prasad checkbox toggle
+        ePrasadCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                prasadAddressSection.style.display = 'block';
+                selectedPrice += 150;
+                document.getElementById('prasadAddress').required = true;
+            } else {
+                prasadAddressSection.style.display = 'none';
+                selectedPrice -= 150;
+                document.getElementById('prasadAddress').required = false;
+            }
+            selectedPujaPrice.textContent = '₹' + selectedPrice;
+        });
+
+        // Form submission
+        document.getElementById('pujaBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const bookingData = {
+                pujaType: selectedPuja,
+                amount: selectedPrice,
+                name: document.getElementById('bookerName').value,
+                gotra: document.getElementById('bookerGotra').value,
+                email: document.getElementById('bookerEmail').value,
+                phone: document.getElementById('bookerPhone').value,
+                date: document.getElementById('pujaDate').value,
+                time: document.getElementById('pujaTime').value,
+                intention: document.getElementById('pujaIntention').value,
+                ePrasad: ePrasadCheckbox.checked,
+                prasadAddress: ePrasadCheckbox.checked ? document.getElementById('prasadAddress').value : '',
+                specialRequests: document.getElementById('specialRequests').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Validation
+            if (!validateEmail(bookingData.email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            if (!validatePhone(bookingData.phone)) {
+                showToast('Please enter a valid phone number', 'error');
+                return;
+            }
+
+            if (!document.getElementById('agreeBookingTerms').checked) {
+                showToast('Please agree to the booking terms', 'error');
+                return;
+            }
+
+            // Save to localStorage (in production, send to backend)
+            const bookings = getFromLocalStorage('pujaBookings') || [];
+            bookings.push(bookingData);
+            saveToLocalStorage('pujaBookings', bookings);
+
+            showToast('Processing your booking...', 'info');
+
+            // Simulate booking confirmation
+            setTimeout(() => {
+                const bookingId = 'PB' + Date.now();
+                showToast(`Booking confirmed! Booking ID: ${bookingId}`, 'success');
+                
+                // In production, redirect to payment gateway
+                console.log('Booking data:', bookingData);
+                console.log('Booking ID:', bookingId);
+                
+                // Send confirmation email/SMS
+                sendBookingConfirmation(bookingData, bookingId);
+                
+                // Reset form
+                this.reset();
+                bookingFormContainer.classList.remove('active');
+                pujaCards.forEach(c => c.classList.remove('selected'));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        });
+
+        function sendBookingConfirmation(bookingData, bookingId) {
+            // In production, backend would send email/SMS
+            console.log('Sending confirmation to:', bookingData.email);
+            console.log('Booking ID:', bookingId);
+            
+            setTimeout(() => {
+                showToast('Confirmation sent to ' + bookingData.email, 'success');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

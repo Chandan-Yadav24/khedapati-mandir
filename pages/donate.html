@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .donate-page {
+            padding: 100px 0 80px;
+            background: var(--color-light-gray);
+        }
+
+        .donate-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .donate-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .donate-header p {
+            font-size: 1.2rem;
+            color: var(--color-text);
+        }
+
+        .seva-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .seva-card {
+            background: var(--color-white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-top: 4px solid var(--color-saffron);
+        }
+
+        .seva-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .seva-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--color-saffron), var(--color-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--color-white);
+            margin-bottom: 20px;
+        }
+
+        .seva-card h3 {
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .seva-card p {
+            color: var(--color-text);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .seva-amount {
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .amount-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .amount-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            background: var(--color-white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .amount-btn:hover,
+        .amount-btn.active {
+            border-color: var(--color-primary);
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .custom-amount {
+            margin-top: 15px;
+        }
+
+        .custom-amount input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .donation-form {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .donation-form h2 {
+            margin-bottom: 30px;
+            color: var(--color-dark);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .terms-text {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--color-cream);
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="donate.html" class="nav-link cta-btn active">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="donate-page">
+        <div class="container">
+            <div class="donate-header">
+                <h1>Donate / दान करें</h1>
+                <p>Support our temple and seva activities. Your contributions help us serve the community.</p>
+            </div>
+
+            <div class="seva-grid">
+                <div class="seva-card" data-aos="fade-up">
+                    <div class="seva-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Annadan Seva</h3>
+                    <p>Provide meals to devotees and visitors. Feed the hungry and earn divine blessings.</p>
+                    <div class="seva-amount">₹501 - ₹5,000</div>
+                    <button class="btn btn-primary btn-donate" data-seva="Annadan" data-amount="501">Donate Now</button>
+                </div>
+
+                <div class="seva-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="seva-icon">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <h3>Prasad Seva</h3>
+                    <p>Sponsor daily prasad distribution for devotees attending aarti and darshan.</p>
+                    <div class="seva-amount">₹251 - ₹2,100</div>
+                    <button class="btn btn-primary btn-donate" data-seva="Prasad" data-amount="251">Donate Now</button>
+                </div>
+
+                                <div class="seva-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="seva-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Deepdan Seva</h3>
+                    <p>Light lamps in the temple. Illuminate the path of devotion and dispel darkness.</p>
+                    <div class="seva-amount">₹101 - ₹1,100</div>
+                    <button class="btn btn-primary btn-donate" data-seva="Deepdan" data-amount="101">Donate Now</button>
+                </div>
+
+                <div class="seva-card" data-aos="fade-up">
+                    <div class="seva-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Vidya Dan</h3>
+                    <p>Support education programs and spiritual learning for underprivileged children.</p>
+                    <div class="seva-amount">₹1,001 - ₹10,000</div>
+                    <button class="btn btn-primary btn-donate" data-seva="Vidya Dan" data-amount="1001">Donate Now</button>
+                </div>
+
+                <div class="seva-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="seva-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>General Donation</h3>
+                    <p>Contribute to temple maintenance, development, and community service activities.</p>
+                    <div class="seva-amount">Any Amount</div>
+                    <button class="btn btn-primary btn-donate" data-seva="General" data-amount="0">Donate Now</button>
+                </div>
+
+                <div class="seva-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="seva-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Temple Development</h3>
+                    <p>Support infrastructure development and renovation projects of the temple.</p>
+                    <div class="seva-amount">₹5,001+</div>
+                    <button class="btn btn-primary btn-donate" data-seva="Development" data-amount="5001">Donate Now</button>
+                </div>
+            </div>
+
+            <!-- Donation Form -->
+            <div class="donation-form" id="donationForm" style="display: none;">
+                <h2>Complete Your Donation</h2>
+                <form id="donateFormElement">
+                    <div class="form-group">
+                        <label class="form-label">Seva Type</label>
+                        <input type="text" class="form-input" id="sevaType" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Select Amount</label>
+                        <div class="amount-options" id="amountOptions">
+                            <!-- Amount buttons will be populated dynamically -->
+                        </div>
+                        <div class="custom-amount">
+                            <input type="number" class="form-input" id="customAmount" placeholder="Enter custom amount" min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-input" id="donorName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-input" id="donorEmail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number *</label>
+                        <input type="tel" class="form-input" id="donorPhone" required placeholder="+91">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">PAN Number (for 80G certificate)</label>
+                        <input type="text" class="form-input" id="donorPan" placeholder="Optional">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="anonymousDonation">
+                        <label for="anonymousDonation">Make this donation anonymous</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="recurringDonation">
+                        <label for="recurringDonation">Make this a monthly recurring donation</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message (Optional)</label>
+                        <textarea class="form-textarea" id="donorMessage" placeholder="Share your thoughts or prayer request"></textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="#" style="color: var(--color-primary);">Donation Terms & Conditions</a></label>
+                    </div>
+
+                    <div class="terms-text">
+                        <strong>Donation Terms:</strong> All donations are voluntary and non-refundable except in cases of duplicate transactions. Official receipts will be issued for every successful payment. Your personal information will be kept confidential.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-lock"></i> Proceed to Secure Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="live-darshan.html">Live Darshan</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="donate.html">Donate / Seva</a></li>
+                        <li><a href="puja-booking.html">Puja Booking</a></li>
+                        <li><a href="prayer-wall.html">Prayer Wall</a></li>
+                        <li><a href="volunteer.html">Volunteer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Madhya Pradesh, India</li>
+                        <li><i class="fas fa-phone"></i> +91 XXX XXX XXXX</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" aria-label="Contact on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Donation page specific JavaScript
+        const donateButtons = document.querySelectorAll('.btn-donate');
+        const donationForm = document.getElementById('donationForm');
+        const donateFormElement = document.getElementById('donateFormElement');
+        const sevaTypeInput = document.getElementById('sevaType');
+        const amountOptionsContainer = document.getElementById('amountOptions');
+        const customAmountInput = document.getElementById('customAmount');
+
+        let selectedAmount = 0;
+
+        // Amount presets for different sevas
+        const amountPresets = {
+            'Annadan': [501, 1001, 2001, 5000],
+            'Prasad': [251, 501, 1001, 2100],
+            'Deepdan': [101, 251, 501, 1100],
+            'Vidya Dan': [1001, 2001, 5001, 10000],
+            'General': [101, 501, 1001, 5001],
+            'Development': [5001, 10001, 25001, 51001]
+        };
+
+        donateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const sevaType = this.dataset.seva;
+                const defaultAmount = this.dataset.amount;
+                
+                // Set seva type
+                sevaTypeInput.value = sevaType;
+                
+                // Generate amount options
+                const amounts = amountPresets[sevaType] || [101, 501, 1001, 5001];
+                amountOptionsContainer.innerHTML = amounts.map(amount => 
+                    `<button type="button" class="amount-btn" data-amount="${amount}">₹${amount}</button>`
+                ).join('');
+                
+                // Show form and scroll to it
+                donationForm.style.display = 'block';
+                donationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Add event listeners to amount buttons
+                document.querySelectorAll('.amount-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        selectedAmount = this.dataset.amount;
+                        customAmountInput.value = '';
+                    });
+                });
+            });
+        });
+
+        // Custom amount input
+        customAmountInput.addEventListener('input', function() {
+            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+            selectedAmount = this.value;
+        });
+
+        // Form submission
+        donateFormElement.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                sevaType: sevaTypeInput.value,
+                amount: selectedAmount || customAmountInput.value,
+                name: document.getElementById('donorName').value,
+                email: document.getElementById('donorEmail').value,
+                phone: document.getElementById('donorPhone').value,
+                pan: document.getElementById('donorPan').value,
+                anonymous: document.getElementById('anonymousDonation').checked,
+                recurring: document.getElementById('recurringDonation').checked,
+                message: document.getElementById('donorMessage').value
+            };
+
+            // Validation
+            if (!formData.amount || formData.amount < 1) {
+                showToast('Please select or enter a valid amount', 'error');
+                return;
+            }
+
+            if (!validateEmail(formData.email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            if (!validatePhone(formData.phone)) {
+                showToast('Please enter a valid 10-digit phone number', 'error');
+                return;
+            }
+
+            if (!document.getElementById('agreeTerms').checked) {
+                showToast('Please agree to the terms and conditions', 'error');
+                return;
+            }
+
+            // Save to localStorage (in real app, this would go to backend)
+            saveToLocalStorage('pendingDonation', formData);
+
+            // Simulate payment gateway redirect
+            showToast('Redirecting to secure payment gateway...', 'success');
+            
+            setTimeout(() => {
+                // In real implementation, integrate Razorpay/PayU
+                processPayment(formData);
+            }, 1500);
+        });
+
+        // Simulate payment processing
+        function processPayment(formData) {
+            // This is where you'd integrate with Razorpay, PhonePe, or PayU
+            console.log('Processing payment:', formData);
+            
+            // Simulate successful payment
+            setTimeout(() => {
+                const transactionId = 'TXN' + Date.now();
+                showToast('Payment successful! Transaction ID: ' + transactionId, 'success');
+                
+                // Send confirmation email (would be done via backend)
+                sendConfirmationEmail(formData, transactionId);
+                
+                // Reset form
+                donateFormElement.reset();
+                donationForm.style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function sendConfirmationEmail(formData, transactionId) {
+            // In real implementation, backend would send email via SendGrid/SES
+            console.log('Sending confirmation email to:', formData.email);
+            console.log('Transaction ID:', transactionId);
+        }
+    </script>
+</body>
+</html>

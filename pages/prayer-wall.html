@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Wall | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .prayer-wall-page {
+            padding: 100px 0 80px;
+            background: var(--color-light-gray);
+        }
+
+        .prayer-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .prayer-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .prayer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .prayer-stat {
+            text-align: center;
+        }
+
+        .prayer-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .prayer-stat-label {
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        .prayer-submit-section {
+            max-width: 700px;
+            margin: 0 auto 60px;
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .prayer-submit-section h2 {
+            margin-bottom: 25px;
+            color: var(--color-dark);
+            text-align: center;
+        }
+
+        .prayer-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .prayer-item {
+            background: var(--color-white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--color-saffron);
+            transition: var(--transition);
+        }
+
+        .prayer-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .prayer-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .prayer-author {
+            font-weight: 600;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prayer-date {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            opacity: 0.7;
+        }
+
+        .prayer-text {
+            color: var(--color-text);
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .prayer-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .prayer-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: var(--color-cream);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .prayer-action-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .prayer-action-btn.active {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .filter-section {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--color-white);
+            border: 2px solid var(--color-border);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-color: var(--color-primary);
+        }
+
+        .load-more-btn {
+            display: block;
+            margin: 40px auto 0;
+        }
+
+        @media (max-width: 768px) {
+            .prayer-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="prayer-wall-page">
+        <div class="container">
+            <div class="prayer-header">
+                <h1>Prayer Wall</h1>
+                <p>प्रार्थना दीवार • Share your prayers and blessings with the divine</p>
+                
+                <div class="prayer-stats">
+                    <div class="prayer-stat">
+                        <div class="prayer-stat-number" id="totalPrayers">1,247</div>
+                        <div class="prayer-stat-label">Total Prayers</div>
+                    </div>
+                    <div class="prayer-stat">
+                        <div class="prayer-stat-number" id="todayPrayers">38</div>
+                        <div class="prayer-stat-label">Today</div>
+                    </div>
+                    <div class="prayer-stat">
+                                                <div class="prayer-stat-number" id="blessingsGiven">5,621</div>
+                        <div class="prayer-stat-label">Blessings Given</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Prayer Form -->
+            <div class="prayer-submit-section">
+                <h2>Submit Your Prayer</h2>
+                <form id="prayerSubmitForm">
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-input" id="prayerName" placeholder="Leave blank to post anonymously">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Prayer *</label>
+                        <textarea class="form-textarea" id="prayerText" required placeholder="Share your prayer, wish, or gratitude..." maxlength="500"></textarea>
+                        <small style="color: var(--color-text); font-size: 0.85rem;">
+                            <span id="charCount">0</span>/500 characters
+                        </small>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="prayerPrivate">
+                        <label for="prayerPrivate">Keep this prayer private (only visible to temple priests)</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="prayerNotification">
+                        <label for="prayerNotification">Notify me when prayers are offered on my behalf</label>
+                    </div>
+
+                    <div id="notificationEmailSection" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="prayerEmail" placeholder="Your email for notification">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-praying-hands"></i> Submit Prayer
+                    </button>
+                </form>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Prayers</button>
+                    <button class="filter-btn" data-filter="recent">Most Recent</button>
+                    <button class="filter-btn" data-filter="popular">Most Blessed</button>
+                    <button class="filter-btn" data-filter="gratitude">Gratitude</button>
+                </div>
+            </div>
+
+            <!-- Prayer List -->
+            <div class="prayer-list" id="prayerList">
+                <!-- Prayers will be loaded dynamically -->
+            </div>
+
+            <button class="btn btn-outline load-more-btn" id="loadMoreBtn">
+                <i class="fas fa-plus"></i> Load More Prayers
+            </button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 XXX XXX XXXX</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Prayer Wall specific JavaScript
+        let prayers = [];
+        let displayedPrayers = 9;
+        let currentFilter = 'all';
+
+        // Sample prayers data
+        const samplePrayers = [
+            {
+                id: 1,
+                author: 'Priya Sharma',
+                text: 'Seeking divine blessings for my family\'s health and happiness. May Lord protect us all. Om Namah Shivaya 🙏',
+                date: '2024-01-10',
+                isPrivate: false,
+                blessings: 47,
+                category: 'general'
+            },
+            {
+                id: 2,
+                author: 'Anonymous',
+                text: 'Thank you for blessing my daughter with success in her exams. Your grace is infinite. Jai Shri Krishna! 🙏',
+                date: '2024-01-10',
+                isPrivate: false,
+                blessings: 89,
+                category: 'gratitude'
+            },
+            {
+                id: 3,
+                author: 'Ramesh Kumar',
+                text: 'Please bless my new business venture. May Lord Ganesha remove all obstacles and bring prosperity.',
+                date: '2024-01-09',
+                isPrivate: false,
+                blessings: 34,
+                category: 'general'
+            },
+            {
+                id: 4,
+                author: 'Devotee',
+                text: 'Praying for world peace and harmony. May divine light guide all humanity towards compassion and love.',
+                date: '2024-01-09',
+                isPrivate: false,
+                blessings: 156,
+                category: 'general'
+            },
+            {
+                id: 5,
+                author: 'Anjali Patel',
+                text: 'Grateful for the safe delivery of my baby boy. Your blessings made it possible. Har Har Mahadev! 🕉️',
+                date: '2024-01-08',
+                isPrivate: false,
+                blessings: 203,
+                category: 'gratitude'
+            },
+            {
+                id: 6,
+                author: 'Anonymous',
+                text: 'Please heal my mother. Give her strength to fight this illness. I have complete faith in divine mercy.',
+                date: '2024-01-08',
+                isPrivate: false,
+                blessings: 178,
+                category: 'general'
+            },
+            {
+                id: 7,
+                author: 'Suresh Verma',
+                text: 'Thank you for guiding me through difficult times. Your presence gave me courage and hope.',
+                date: '2024-01-07',
+                isPrivate: false,
+                blessings: 92,
+                category: 'gratitude'
+            },
+            {
+                id: 8,
+                author: 'Meera Singh',
+                text: 'Seeking blessings for my son\'s marriage. May he find a suitable life partner soon. Om Shanti 🙏',
+                date: '2024-01-07',
+                isPrivate: false,
+                blessings: 65,
+                category: 'general'
+            },
+            {
+                id: 9,
+                author: 'Devotee',
+                text: 'May all beings be happy and free from suffering. Sending love and prayers to everyone.',
+                date: '2024-01-06',
+                isPrivate: false,
+                blessings: 234,
+                category: 'general'
+            },
+            {
+                id: 10,
+                author: 'Anonymous',
+                text: 'Finally got my dream job! Thank you for your divine intervention. Forever grateful! 🙏',
+                date: '2024-01-06',
+                isPrivate: false,
+                blessings: 145,
+                category: 'gratitude'
+            }
+        ];
+
+        prayers = [...samplePrayers];
+
+        // Character count for prayer text
+        const prayerText = document.getElementById('prayerText');
+        const charCount = document.getElementById('charCount');
+
+        prayerText.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+
+        // Notification checkbox toggle
+        document.getElementById('prayerNotification').addEventListener('change', function() {
+            const emailSection = document.getElementById('notificationEmailSection');
+            emailSection.style.display = this.checked ? 'block' : 'none';
+            document.getElementById('prayerEmail').required = this.checked;
+        });
+
+        // Prayer submission
+        document.getElementById('prayerSubmitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const prayerData = {
+                id: Date.now(),
+                author: document.getElementById('prayerName').value || 'Anonymous',
+                text: prayerText.value,
+                date: new Date().toISOString().split('T')[0],
+                isPrivate: document.getElementById('prayerPrivate').checked,
+                blessings: 0,
+                category: 'general',
+                email: document.getElementById('prayerNotification').checked ? 
+                       document.getElementById('prayerEmail').value : null
+            };
+
+            if (prayerData.isPrivate) {
+                showToast('Your prayer has been submitted privately to the priests', 'success');
+            } else {
+                // Add to prayers array
+                prayers.unshift(prayerData);
+                
+                // Save to localStorage
+                const savedPrayers = getFromLocalStorage('userPrayers') || [];
+                savedPrayers.push(prayerData);
+                saveToLocalStorage('userPrayers', savedPrayers);
+
+                showToast('Your prayer has been shared on the wall. May it be answered! 🙏', 'success');
+                
+                // Reload prayers
+                loadPrayers();
+            }
+
+            // Reset form
+            this.reset();
+            charCount.textContent = '0';
+            document.getElementById('notificationEmailSection').style.display = 'none';
+
+            // Update stats
+            updateStats();
+        });
+
+        // Load and display prayers
+        function loadPrayers() {
+            const prayerList = document.getElementById('prayerList');
+            let filteredPrayers = [...prayers];
+
+            // Apply filter
+            if (currentFilter === 'recent') {
+                filteredPrayers.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (currentFilter === 'popular') {
+                filteredPrayers.sort((a, b) => b.blessings - a.blessings);
+            } else if (currentFilter === 'gratitude') {
+                filteredPrayers = filteredPrayers.filter(p => p.category === 'gratitude');
+            }
+
+            // Display prayers
+            const prayersToShow = filteredPrayers.slice(0, displayedPrayers);
+            
+            prayerList.innerHTML = prayersToShow.map(prayer => `
+                <div class="prayer-item" data-aos="fade-up">
+                    <div class="prayer-item-header">
+                        <div class="prayer-author">
+                            <i class="fas fa-user-circle"></i>
+                            ${prayer.author}
+                        </div>
+                        <div class="prayer-date">${formatDate(prayer.date)}</div>
+                    </div>
+                    <div class="prayer-text">"${prayer.text}"</div>
+                    <div class="prayer-actions">
+                        <button class="prayer-action-btn" onclick="giveBlessings(${prayer.id})">
+                            <i class="fas fa-praying-hands"></i>
+                            <span id="blessing-count-${prayer.id}">${prayer.blessings}</span> Blessings
+                        </button>
+                        <button class="prayer-action-btn" onclick="sharePrayer(${prayer.id})">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Show/hide load more button
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            loadMoreBtn.style.display = displayedPrayers >= filteredPrayers.length ? 'none' : 'block';
+        }
+
+        // Give blessings function
+        function giveBlessings(prayerId) {
+            const prayer = prayers.find(p => p.id === prayerId);
+            if (prayer) {
+                prayer.blessings++;
+                document.getElementById(`blessing-count-${prayerId}`).textContent = prayer.blessings;
+                
+                // Add active state temporarily
+                event.target.closest('.prayer-action-btn').classList.add('active');
+                
+                showToast('Blessing sent! 🙏', 'success');
+                
+                // Update stats
+                updateStats();
+            }
+        }
+
+        // Share prayer function
+        function sharePrayer(prayerId) {
+            const prayer = prayers.find(p => p.id === prayerId);
+            if (prayer) {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Prayer from Khedapati Sarkar Mandir',
+                        text: prayer.text,
+                        url: window.location.href
+                    }).then(() => {
+                        showToast('Prayer shared successfully!', 'success');
+                    }).catch(() => {
+                        copyToClipboard(prayer.text);
+                    });
+                } else {
+                    copyToClipboard(prayer.text);
+                }
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Prayer copied to clipboard!', 'success');
+            });
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                currentFilter = this.dataset.filter;
+                displayedPrayers = 9;
+                loadPrayers();
+            });
+        });
+
+        // Load more button
+        document.getElementById('loadMoreBtn').addEventListener('click', function() {
+            displayedPrayers += 9;
+            loadPrayers();
+        });
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('totalPrayers').textContent = prayers.length.toLocaleString();
+            
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = prayers.filter(p => p.date === today).length;
+            document.getElementById('todayPrayers').textContent = todayCount;
+            
+            const totalBlessings = prayers.reduce((sum, p) => sum + p.blessings, 0);
+            document.getElementById('blessingsGiven').textContent = totalBlessings.toLocaleString();
+        }
+
+        // Initialize
+        loadPrayers();
+        updateStats();
+    </script>
+</body>
+</html>

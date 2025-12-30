@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Showcase - Khedapati Sarkar Mandir</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .showcase-page {
+            padding: 0;
+            background: var(--color-white);
+        }
+
+        .showcase-hero {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #8B4513 0%, #D2691E 25%, #FF8C00 50%, #FFA500 75%, #FFD700 100%);
+            color: var(--color-white);
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="mandala" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="10" r="3" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect fill="url(%23mandala)" width="100" height="100"/></svg>');
+            opacity: 0.6;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .showcase-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: var(--spacing-md);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .showcase-hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .design-features {
+            padding: var(--spacing-xxl) 0;
+            background: var(--gradient-warm);
+            position: relative;
+        }
+
+        .design-features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 140, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: var(--color-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: var(--transition-normal);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-saffron);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card i {
+            font-size: 3.5rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-lg);
+            display: block;
+            transition: var(--transition-normal);
+        }
+
+        .feature-card:hover i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            color: var(--color-dark);
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .color-palette {
+            padding: var(--spacing-xxl) 0;
+            background: var(--gradient-cool);
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .color-card {
+            background: var(--color-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+
+        .color-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 80px;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .color-name {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+        }
+
+        .typography-showcase {
+            padding: var(--spacing-xxl) 0;
+            background: var(--color-white);
+        }
+
+        .typography-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .typography-card {
+            background: var(--color-light-gray);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+        }
+
+        .typography-card h3 {
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .font-sample {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .font-sample h4 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.1rem;
+        }
+
+        .font-sample p {
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .button-showcase {
+            padding: var(--spacing-xxl) 0;
+            background: var(--gradient-warm);
+        }
+
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            justify-content: center;
+        }
+
+        .component-showcase {
+            padding: var(--spacing-xxl) 0;
+            background: var(--color-white);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .component-card {
+            background: var(--color-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+        }
+
+        .component-card h3 {
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .info-card {
+            background: var(--color-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            border: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: var(--transition-normal);
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-saffron);
+        }
+
+        .info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .info-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-lg);
+            background: var(--gradient-accent);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: var(--color-white);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .info-card:hover .info-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .info-card p {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .info-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-primary);
+            font-weight: 600;
+            transition: var(--transition-fast);
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            background: var(--color-light-cream);
+        }
+
+        .info-link:hover {
+            transform: translateX(5px);
+            background: var(--color-saffron);
+            color: var(--color-white);
+            box-shadow: var(--shadow-sm);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="index.html" class="nav-link">होम / Home</a>
+                    <a href="pages/about.html" class="nav-link">मंदिर / About</a>
+                    <a href="pages/timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="pages/live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="pages/gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="pages/contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="pages/volunteer.html" class="nav-link">सेवा / Volunteer</a>
+                    <a href="pages/donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="showcase-page">
+        <!-- Hero Section -->
+        <section class="showcase-hero">
+            <div class="container">
+                <h1>🎨 Modern Design Showcase</h1>
+                <p>Experience the beautiful new design system for Khedapati Sarkar Mandir</p>
+            </div>
+        </section>
+
+        <!-- Design Features -->
+        <section class="design-features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Design Features</h2>
+                    <p class="section-subtitle">Modern, spiritual, and user-friendly</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up">
+                        <i class="fas fa-palette"></i>
+                        <h3>Modern Color Palette</h3>
+                        <p>Carefully selected warm, spiritual colors that evoke peace and devotion</p>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-font"></i>
+                        <h3>Beautiful Typography</h3>
+                        <p>Inter and Playfair Display fonts for perfect readability and elegance</p>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile First</h3>
+                        <p>Fully responsive design that works perfectly on all devices</p>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-magic"></i>
+                        <h3>Smooth Animations</h3>
+                        <p>Subtle animations and transitions for enhanced user experience</p>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-universal-access"></i>
+                        <h3>Accessibility</h3>
+                        <p>WCAG compliant design with proper contrast and keyboard navigation</p>
+                    </div>
+                    
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Performance</h3>
+                        <p>Optimized for speed with modern CSS and efficient JavaScript</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Palette -->
+        <section class="color-palette">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Color Palette</h2>
+                    <p class="section-subtitle">Spiritual and modern color scheme</p>
+                </div>
+                
+                <div class="palette-grid">
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-primary);"></div>
+                        <div class="color-name">Primary</div>
+                        <div class="color-code">#8B4513</div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-secondary);"></div>
+                        <div class="color-name">Secondary</div>
+                        <div class="color-code">#D2691E</div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-accent);"></div>
+                        <div class="color-name">Accent</div>
+                        <div class="color-code">#FF8C00</div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-saffron);"></div>
+                        <div class="color-name">Saffron</div>
+                        <div class="color-code">#FFA500</div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-gold);"></div>
+                        <div class="color-name">Gold</div>
+                        <div class="color-code">#FFD700</div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-swatch" style="background: var(--color-cream);"></div>
+                        <div class="color-name">Cream</div>
+                        <div class="color-code">#FFF8DC</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Showcase -->
+        <section class="typography-showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Typography</h2>
+                    <p class="section-subtitle">Beautiful fonts for better readability</p>
+                </div>
+                
+                <div class="typography-grid">
+                    <div class="typography-card">
+                        <h3>Headings</h3>
+                        <div class="font-sample">
+                            <h4>Playfair Display</h4>
+                            <h1 style="font-family: var(--font-serif); color: var(--color-primary);">Main Heading</h1>
+                            <h2 style="font-family: var(--font-serif); color: var(--color-secondary);">Section Heading</h2>
+                            <h3 style="font-family: var(--font-serif); color: var(--color-dark);">Subsection</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="typography-card">
+                        <h3>Body Text</h3>
+                        <div class="font-sample">
+                            <h4>Inter</h4>
+                            <p style="font-family: var(--font-primary);">This is body text using Inter font. It's highly readable and modern, perfect for temple websites and spiritual content.</p>
+                            <p style="font-family: var(--font-primary); font-weight: 300;">Light weight text for subtle information.</p>
+                            <p style="font-family: var(--font-primary); font-weight: 600;">Bold text for emphasis and important information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Button Showcase -->
+        <section class="button-showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Button Styles</h2>
+                    <p class="section-subtitle">Interactive and beautiful buttons</p>
+                </div>
+                
+                <div class="button-grid">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-heart"></i> Primary Button
+                    </button>
+                    
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-star"></i> Secondary Button
+                    </button>
+                    
+                    <button class="btn btn-outline">
+                        <i class="fas fa-info"></i> Outline Button
+                    </button>
+                    
+                    <button class="btn btn-white">
+                        <i class="fas fa-check"></i> White Button
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Component Showcase -->
+        <section class="component-showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Components</h2>
+                    <p class="section-subtitle">Reusable design components</p>
+                </div>
+                
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h3>Form Elements</h3>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="Enter your email">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>
+                    
+                    <div class="component-card">
+                        <h3>Info Cards</h3>
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3>Temple Timings</h3>
+                            <p>Morning: 5:00 AM - 12:00 PM<br>Evening: 4:00 PM - 9:00 PM</p>
+                            <a href="#" class="info-link">View Schedule →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/timings.html">Timings</a></li>
+                        <li><a href="pages/gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+

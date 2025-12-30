@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gallery-page {
+            padding: 100px 0 80px;
+            background: var(--color-light-gray);
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .gallery-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--color-white);
+            border: 2px solid var(--color-border);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-color: var(--color-primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-info {
+            color: var(--color-white);
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-saffron), var(--color-gold));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        .gallery-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .gallery-placeholder h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .gallery-placeholder p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .modal-info {
+            padding: 20px;
+            background: var(--color-white);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+
+        .modal-description {
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--color-white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--color-primary);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--color-white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-nav:hover {
+            background: var(--color-primary);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .video-gallery {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .video-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--color-white);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .video-play:hover {
+            background: var(--color-primary);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .gallery-filters {
+                justify-content: center;
+            }
+            
+            .modal-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .modal-prev {
+                left: 10px;
+            }
+            
+            .modal-next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link active">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="volunteer.html" class="nav-link">सेवा / Volunteer</a>
+                    <a href="donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="gallery-page">
+        <div class="container">
+            <div class="gallery-header">
+                <h1>Divine Gallery</h1>
+                <p>प्रभु फोटोज़ • Experience the beauty and spirituality of our temple</p>
+            </div>
+
+            <!-- Gallery Filters -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="temple">Temple</button>
+                <button class="filter-btn" data-filter="aarti">Aarti</button>
+                <button class="filter-btn" data-filter="festivals">Festivals</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="community">Community</button>
+            </div>
+
+            <!-- Photo Gallery -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Temple Architecture -->
+                <div class="gallery-item" data-category="temple" data-aos="fade-up">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-gopuram"></i>
+                        <h3>Main Temple</h3>
+                        <p>Sacred architecture</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Main Temple</div>
+                            <div class="gallery-description">Beautiful architecture of our sacred temple</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="temple" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-temple-hindu"></i>
+                        <h3>Temple Interior</h3>
+                        <p>Sacred sanctum</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Temple Interior</div>
+                            <div class="gallery-description">The sacred sanctum sanctorum</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aarti Ceremonies -->
+                <div class="gallery-item" data-category="aarti" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-fire"></i>
+                        <h3>Morning Aarti</h3>
+                        <p>Divine morning ceremony</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Morning Aarti</div>
+                            <div class="gallery-description">Sacred morning aarti ceremony</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="aarti" data-aos="fade-up" data-aos-delay="300">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-moon"></i>
+                        <h3>Evening Aarti</h3>
+                        <p>Peaceful evening ceremony</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Evening Aarti</div>
+                            <div class="gallery-description">Beautiful evening aarti with devotees</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Festivals -->
+                <div class="gallery-item" data-category="festivals" data-aos="fade-up" data-aos-delay="400">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-drum"></i>
+                        <h3>Holi Celebration</h3>
+                        <p>Festival of colors</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Holi Celebration</div>
+                            <div class="gallery-description">Joyful festival of colors</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="festivals" data-aos="fade-up" data-aos-delay="500">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-candle-holder"></i>
+                        <h3>Diwali Festival</h3>
+                        <p>Festival of lights</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Diwali Festival</div>
+                            <div class="gallery-description">Illuminated temple during Diwali</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Events -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="600">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Annadan Seva</h3>
+                        <p>Community meal service</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Annadan Seva</div>
+                            <div class="gallery-description">Serving meals to devotees</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="700">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Educational Program</h3>
+                        <p>Learning and teaching</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Educational Program</div>
+                            <div class="gallery-description">Spiritual learning sessions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community -->
+                <div class="gallery-item" data-category="community" data-aos="fade-up" data-aos-delay="800">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-users"></i>
+                        <h3>Devotee Gathering</h3>
+                        <p>Community togetherness</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Devotee Gathering</div>
+                            <div class="gallery-description">Community coming together in prayer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="community" data-aos="fade-up" data-aos-delay="900">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>Volunteer Service</h3>
+                        <p>Selfless service</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Volunteer Service</div>
+                            <div class="gallery-description">Devotees serving the community</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="temple" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-sun"></i>
+                        <h3>Sunrise View</h3>
+                        <p>Peaceful morning</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Sunrise View</div>
+                            <div class="gallery-description">Beautiful sunrise over the temple</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="aarti" data-aos="fade-up" data-aos-delay="1100">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-praying-hands"></i>
+                        <h3>Special Aarti</h3>
+                        <p>Devotional ceremony</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <div class="gallery-title">Special Aarti</div>
+                            <div class="gallery-description">Grand aarti ceremony</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Gallery -->
+            <div class="video-gallery">
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--color-dark);">Video Gallery</h2>
+                <p style="text-align: center; color: var(--color-text); margin-bottom: 30px;">Watch our spiritual ceremonies and events</p>
+                
+                <div class="video-grid">
+                    <div class="video-item" data-aos="fade-up">
+                        <div class="gallery-placeholder">
+                            <i class="fas fa-video"></i>
+                            <h3>Morning Aarti Video</h3>
+                            <p>Sacred morning ceremony</p>
+                        </div>
+                        <button class="video-play">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+
+                    <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="gallery-placeholder">
+                            <i class="fas fa-video"></i>
+                            <h3>Festival Celebration</h3>
+                            <p>Joyful festival moments</p>
+                        </div>
+                        <button class="video-play">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+
+                    <div class="video-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="gallery-placeholder">
+                            <i class="fas fa-video"></i>
+                            <h3>Temple Tour</h3>
+                            <p>Virtual temple walkthrough</p>
+                        </div>
+                        <button class="video-play">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Image Viewing -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="modal-nav modal-prev" id="modalPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="modal-nav modal-next" id="modalNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-description" id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="live-darshan.html">Live Darshan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Gallery functionality
+        let currentImageIndex = 0;
+        let filteredImages = [];
+
+        // Sample gallery data
+        const galleryData = [
+            {
+                title: "Main Temple",
+                description: "Beautiful architecture of our sacred temple",
+                category: "temple",
+                icon: "fas fa-gopuram"
+            },
+            {
+                title: "Temple Interior",
+                description: "The sacred sanctum sanctorum",
+                category: "temple",
+                icon: "fas fa-temple-hindu"
+            },
+            {
+                title: "Morning Aarti",
+                description: "Sacred morning aarti ceremony",
+                category: "aarti",
+                icon: "fas fa-fire"
+            },
+            {
+                title: "Evening Aarti",
+                description: "Beautiful evening aarti with devotees",
+                category: "aarti",
+                icon: "fas fa-moon"
+            },
+            {
+                title: "Holi Celebration",
+                description: "Joyful festival of colors",
+                category: "festivals",
+                icon: "fas fa-drum"
+            },
+            {
+                title: "Diwali Festival",
+                description: "Illuminated temple during Diwali",
+                category: "festivals",
+                icon: "fas fa-candle-holder"
+            },
+            {
+                title: "Annadan Seva",
+                description: "Serving meals to devotees",
+                category: "events",
+                icon: "fas fa-utensils"
+            },
+            {
+                title: "Educational Program",
+                description: "Spiritual learning sessions",
+                category: "events",
+                icon: "fas fa-graduation-cap"
+            },
+            {
+                title: "Devotee Gathering",
+                description: "Community coming together in prayer",
+                category: "community",
+                icon: "fas fa-users"
+            },
+            {
+                title: "Volunteer Service",
+                description: "Devotees serving the community",
+                category: "community",
+                icon: "fas fa-hands-helping"
+            },
+            {
+                title: "Sunrise View",
+                description: "Beautiful sunrise over the temple",
+                category: "temple",
+                icon: "fas fa-sun"
+            },
+            {
+                title: "Special Aarti",
+                description: "Grand aarti ceremony",
+                category: "aarti",
+                icon: "fas fa-praying-hands"
+            }
+        ];
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                const galleryItems = document.querySelectorAll('.gallery-item');
+
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalClose = document.getElementById('modalClose');
+        const modalPrev = document.getElementById('modalPrev');
+        const modalNext = document.getElementById('modalNext');
+
+        // Open modal
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+            item.addEventListener('click', function() {
+                currentImageIndex = index;
+                filteredImages = Array.from(document.querySelectorAll('.gallery-item:not([style*="display: none"])'));
+                const currentIndex = filteredImages.indexOf(this);
+                currentImageIndex = currentIndex >= 0 ? currentIndex : 0;
+                
+                showModal();
+            });
+        });
+
+        function showModal() {
+            const currentItem = filteredImages[currentImageIndex];
+            const title = currentItem.querySelector('.gallery-title').textContent;
+            const description = currentItem.querySelector('.gallery-description').textContent;
+            
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modalImage.src = ''; // In real implementation, use actual image URLs
+            modalImage.alt = title;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Modal controls
+        modalClose.addEventListener('click', hideModal);
+        
+        modalPrev.addEventListener('click', function() {
+            currentImageIndex = (currentImageIndex - 1 + filteredImages.length) % filteredImages.length;
+            showModal();
+        });
+        
+        modalNext.addEventListener('click', function() {
+            currentImageIndex = (currentImageIndex + 1) % filteredImages.length;
+            showModal();
+        });
+
+        // Close modal on background click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                hideModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    hideModal();
+                } else if (e.key === 'ArrowLeft') {
+                    modalPrev.click();
+                } else if (e.key === 'ArrowRight') {
+                    modalNext.click();
+                }
+            }
+        });
+
+        // Video play buttons
+        document.querySelectorAll('.video-play').forEach(btn => {
+            btn.addEventListener('click', function() {
+                showToast('Video player would open here', 'info');
+            });
+        });
+    </script>
+</body>
+</html>

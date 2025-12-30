@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .volunteer-page {
+            padding: 100px 0 80px;
+            background: var(--color-light-gray);
+        }
+
+        .volunteer-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .volunteer-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .volunteer-opportunities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .opportunity-card {
+            background: var(--color-white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-top: 4px solid var(--color-saffron);
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .opportunity-card h3 {
+            color: var(--color-dark);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .opportunity-card p {
+            color: var(--color-text);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .opportunity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .time-commitment {
+            background: var(--color-cream);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .volunteer-form-section {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .availability-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: var(--color-cream);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .availability-option:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .availability-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .benefits-section {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin: 40px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .benefit-item i {
+            font-size: 2.5rem;
+            color: var(--color-saffron);
+            margin-bottom: 15px;
+        }
+
+        .benefit-item h4 {
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .availability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="volunteer.html" class="nav-link active">सेवा / Volunteer</a>
+                    <a href="donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="volunteer-page">
+        <div class="container">
+            <div class="volunteer-header">
+                <h1>Join Our Volunteer Program</h1>
+                <p>सेवा करें • Serve with devotion and make a difference in our community</p>
+            </div>
+
+            <!-- Volunteer Opportunities -->
+            <div class="volunteer-opportunities">
+                <div class="opportunity-card" data-aos="fade-up">
+                    <h3><i class="fas fa-utensils"></i> Annadan Seva</h3>
+                    <p>Help in preparing and serving meals to devotees and visitors. This sacred service ensures no one goes hungry.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 2-3 hours</span>
+                        <span class="time-commitment">Weekly</span>
+                    </div>
+                    <ul>
+                        <li>Food preparation assistance</li>
+                        <li>Serving meals to devotees</li>
+                        <li>Kitchen cleanup</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3><i class="fas fa-broom"></i> Temple Maintenance</h3>
+                    <p>Help maintain the cleanliness and beauty of our sacred temple premises.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 1-2 hours</span>
+                        <span class="time-commitment">Flexible</span>
+                    </div>
+                    <ul>
+                        <li>Cleaning temple areas</li>
+                        <li>Gardening and landscaping</li>
+                        <li>Decoration for festivals</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3><i class="fas fa-users"></i> Event Coordination</h3>
+                    <p>Assist in organizing and managing temple events, festivals, and special ceremonies.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 3-4 hours</span>
+                        <span class="time-commitment">Event-based</span>
+                    </div>
+                    <ul>
+                        <li>Event planning and setup</li>
+                        <li>Guest coordination</li>
+                        <li>Decoration and arrangements</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Education Support</h3>
+                    <p>Help with educational programs, Sanskrit classes, and spiritual learning sessions.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 2-3 hours</span>
+                        <span class="time-commitment">Weekly</span>
+                    </div>
+                    <ul>
+                        <li>Teaching assistance</li>
+                        <li>Material preparation</li>
+                        <li>Student support</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card" data-aos="fade-up" data-aos-delay="400">
+                    <h3><i class="fas fa-hands-helping"></i> Community Outreach</h3>
+                    <p>Participate in community service activities and outreach programs.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 2-4 hours</span>
+                        <span class="time-commitment">Monthly</span>
+                    </div>
+                    <ul>
+                        <li>Medical camps</li>
+                        <li>Educational workshops</li>
+                        <li>Social welfare activities</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card" data-aos="fade-up" data-aos-delay="500">
+                    <h3><i class="fas fa-microphone"></i> Aarti & Puja Assistance</h3>
+                    <p>Help with daily aarti ceremonies and special puja arrangements.</p>
+                    <div class="opportunity-meta">
+                        <span><i class="fas fa-clock"></i> 1-2 hours</span>
+                        <span class="time-commitment">Daily/Weekly</span>
+                    </div>
+                    <ul>
+                        <li>Aarti preparation</li>
+                        <li>Puja material arrangement</li>
+                        <li>Ceremony assistance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits-section">
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--color-dark);">Benefits of Volunteering</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fas fa-heart"></i>
+                        <h4>Spiritual Growth</h4>
+                        <p>Deepen your spiritual connection through selfless service</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Community Connection</h4>
+                        <p>Build meaningful relationships with fellow devotees</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Learn & Grow</h4>
+                        <p>Gain new skills and knowledge about temple traditions</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-smile"></i>
+                        <h4>Personal Satisfaction</h4>
+                        <p>Experience the joy of serving others and the divine</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Registration Form -->
+            <div class="volunteer-form-section">
+                <h2 style="text-align: center; margin-bottom: 30px; color: var(--color-dark);">Join Our Volunteer Team</h2>
+                <form id="volunteerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-input" id="volunteerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" id="volunteerEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-input" id="volunteerPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Age</label>
+                            <input type="number" class="form-input" id="volunteerAge" min="16" max="80">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Areas of Interest *</label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="annadan"> Annadan Seva
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="maintenance"> Temple Maintenance
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="events"> Event Coordination
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="education"> Education Support
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="outreach"> Community Outreach
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="interests" value="aarti"> Aarti & Puja Assistance
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Availability *</label>
+                        <div class="availability-grid">
+                            <label class="availability-option">
+                                <input type="checkbox" name="availability" value="morning">
+                                <span>Morning (6-12 PM)</span>
+                            </label>
+                            <label class="availability-option">
+                                <input type="checkbox" name="availability" value="afternoon">
+                                <span>Afternoon (12-6 PM)</span>
+                            </label>
+                            <label class="availability-option">
+                                <input type="checkbox" name="availability" value="evening">
+                                <span>Evening (6-9 PM)</span>
+                            </label>
+                            <label class="availability-option">
+                                <input type="checkbox" name="availability" value="weekends">
+                                <span>Weekends</span>
+                            </label>
+                            <label class="availability-option">
+                                <input type="checkbox" name="availability" value="flexible">
+                                <span>Flexible</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Previous Volunteer Experience</label>
+                        <textarea class="form-textarea" id="volunteerExperience" placeholder="Tell us about any previous volunteer work or relevant experience..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Why do you want to volunteer with us? *</label>
+                        <textarea class="form-textarea" id="volunteerMotivation" required placeholder="Share your motivation for joining our volunteer program..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="agreeVolunteerTerms" required>
+                            <span>I agree to the volunteer terms and conditions *</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-hand-holding-heart"></i> Submit Volunteer Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Volunteer form submission
+        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('volunteerName').value,
+                email: document.getElementById('volunteerEmail').value,
+                phone: document.getElementById('volunteerPhone').value,
+                age: document.getElementById('volunteerAge').value,
+                interests: Array.from(document.querySelectorAll('input[name="interests"]:checked')).map(cb => cb.value),
+                availability: Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value),
+                experience: document.getElementById('volunteerExperience').value,
+                motivation: document.getElementById('volunteerMotivation').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Validation
+            if (!validateEmail(formData.email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            if (!validatePhone(formData.phone)) {
+                showToast('Please enter a valid phone number', 'error');
+                return;
+            }
+
+            if (formData.interests.length === 0) {
+                showToast('Please select at least one area of interest', 'error');
+                return;
+            }
+
+            if (formData.availability.length === 0) {
+                showToast('Please select your availability', 'error');
+                return;
+            }
+
+            // Save to localStorage (in production, send to backend)
+            const volunteers = getFromLocalStorage('volunteerApplications') || [];
+            volunteers.push(formData);
+            saveToLocalStorage('volunteerApplications', volunteers);
+
+            showToast('Thank you for your interest! We\'ll contact you soon.', 'success');
+
+            // Reset form
+            this.reset();
+
+            // Simulate sending confirmation email
+            setTimeout(() => {
+                showToast('Confirmation email sent to ' + formData.email, 'info');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+

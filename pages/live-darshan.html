@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Darshan | Khedapati Sarkar Mandir</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .live-darshan-page {
+            padding: 100px 0 80px;
+            background: var(--color-white);
+        }
+
+        .live-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .live-header h1 {
+            font-size: 3rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: var(--color-secondary);
+            color: var(--color-white);
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            animation: pulse-live 2s infinite;
+        }
+
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-indicator.offline {
+            background: var(--color-text);
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto 40px;
+                        background: var(--color-dark);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-white);
+        }
+
+        .video-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .schedule-section {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 30px;
+            background: var(--color-cream);
+            border-radius: var(--border-radius);
+        }
+
+        .schedule-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--color-dark);
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .schedule-table th {
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-weight: 600;
+        }
+
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .schedule-table tr:hover {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .live-now-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--color-secondary);
+            color: var(--color-white);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        .reminder-section {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px;
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .reminder-section h3 {
+            margin-bottom: 20px;
+            color: var(--color-dark);
+        }
+
+        .reminder-form {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reminder-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .chat-section {
+            max-width: 800px;
+            margin: 50px auto 0;
+            padding: 30px;
+            background: var(--color-light-gray);
+            border-radius: var(--border-radius);
+        }
+
+        .chat-section h3 {
+            margin-bottom: 20px;
+            color: var(--color-dark);
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            background: var(--color-white);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--color-cream);
+            border-radius: 8px;
+        }
+
+        .chat-message .username {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-om"></i>
+                    <span>Khedapati Sarkar Mandir</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" id="mainNav">
+                    <a href="../index.html" class="nav-link">होम / Home</a>
+                    <a href="about.html" class="nav-link">मंदिर / About</a>
+                    <a href="timings.html" class="nav-link">टाइमिंग / Timings</a>
+                    <a href="live-darshan.html" class="nav-link active">लाइव दर्शन / Live</a>
+                    <a href="gallery.html" class="nav-link">गैलरी / Gallery</a>
+                    <a href="contact.html" class="nav-link">संपर्क / Contact</a>
+                    <a href="donate.html" class="nav-link cta-btn">दान करें / Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="live-darshan-page">
+        <div class="container">
+            <div class="live-header">
+                <h1>Live Darshan</h1>
+                <div class="live-indicator" id="liveIndicator">
+                    <i class="fas fa-circle"></i>
+                    <span id="liveStatusText">Checking status...</span>
+                </div>
+                <p>Experience divine presence from anywhere in the world</p>
+            </div>
+
+            <!-- Video Container -->
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <!-- Replace with actual YouTube live stream embed -->
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <i class="fas fa-video-slash"></i>
+                        <h3>Stream Currently Offline</h3>
+                        <p>Next live darshan: <span id="nextLiveTime">5:00 AM</span></p>
+                    </div>
+                    <!-- When live, replace placeholder with iframe -->
+                    <!-- <iframe id="liveStream" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                </div>
+            </div>
+
+            <!-- Darshan Schedule -->
+            <div class="schedule-section">
+                <h2>Live Darshan Schedule</h2>
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Event</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleTableBody">
+                        <tr>
+                            <td>5:00 AM - 7:00 AM</td>
+                            <td>Morning Aarti & Darshan</td>
+                            <td><span class="schedule-status" data-time="5-7"></span></td>
+                        </tr>
+                        <tr>
+                            <td>12:00 PM - 1:00 PM</td>
+                            <td>Afternoon Bhog Aarti</td>
+                            <td><span class="schedule-status" data-time="12-13"></span></td>
+                        </tr>
+                        <tr>
+                            <td>6:00 PM - 8:00 PM</td>
+                            <td>Evening Aarti & Darshan</td>
+                            <td><span class="schedule-status" data-time="18-20"></span></td>
+                        </tr>
+                        <tr>
+                            <td>9:00 PM - 9:30 PM</td>
+                            <td>Shayan Aarti (Sleep Ceremony)</td>
+                            <td><span class="schedule-status" data-time="21-21.5"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Set Reminder -->
+            <div class="reminder-section">
+                <h3>Get Reminder for Next Live Darshan</h3>
+                <p>We'll send you a notification before the stream starts</p>
+                <form class="reminder-form" id="reminderForm">
+                    <input type="email" placeholder="Enter your email" id="reminderEmail" required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-bell"></i> Set Reminder
+                    </button>
+                </form>
+            </div>
+
+            <!-- Live Chat (Optional) -->
+            <div class="chat-section">
+                <h3>Live Chat with Devotees</h3>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">
+                        <div class="username">Devotee</div>
+                        <div>Jai Shri Khedapati Sarkar! 🙏</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="username">Ramesh Kumar</div>
+                        <div>Har Har Mahadev! Beautiful darshan</div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" placeholder="Type your message..." id="chatInput">
+                    <button class="btn btn-primary" id="sendChatBtn">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Khedapati Sarkar Mandir</h3>
+                    <p>Spreading divine grace and spiritual wisdom</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="timings.html">Timings</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@khedapatisarkar.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Khedapati Sarkar Mandir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Live Darshan page specific JavaScript
+        function checkLiveStatus() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours + (minutes / 60);
+
+            const liveIndicator = document.getElementById('liveIndicator');
+            const liveStatusText = document.getElementById('liveStatusText');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const nextLiveTime = document.getElementById('nextLiveTime');
+
+            // Check if within live schedule times
+            const isLive = (currentTime >= 5 && currentTime < 7) ||
+                           (currentTime >= 12 && currentTime < 13) ||
+                           (currentTime >= 18 && currentTime < 20) ||
+                           (currentTime >= 21 && currentTime < 21.5);
+
+            if (isLive) {
+                liveIndicator.classList.remove('offline');
+                liveStatusText.textContent = '🔴 Live Now';
+                videoPlaceholder.style.display = 'none';
+                // In production, show iframe here
+                // document.getElementById('liveStream').style.display = 'block';
+            } else {
+                liveIndicator.classList.add('offline');
+                liveStatusText.textContent = 'Offline';
+                videoPlaceholder.style.display = 'flex';
+                
+                // Calculate next live time
+                let nextTime = '';
+                if (currentTime < 5) nextTime = '5:00 AM';
+                else if (currentTime < 12) nextTime = '12:00 PM';
+                else if (currentTime < 18) nextTime = '6:00 PM';
+                else if (currentTime < 21) nextTime = '9:00 PM';
+                else nextTime = 'Tomorrow 5:00 AM';
+                
+                nextLiveTime.textContent = nextTime;
+            }
+
+            // Update schedule status indicators
+            document.querySelectorAll('.schedule-status').forEach(status => {
+                const timeRange = status.dataset.time.split('-').map(Number);
+                const isCurrentlyLive = currentTime >= timeRange[0] && currentTime < timeRange[1];
+                
+                if (isCurrentlyLive) {
+                    status.innerHTML = '<span class="live-now-badge">🔴 Live Now</span>';
+                } else {
+                    status.textContent = 'Offline';
+                    status.style.color = 'var(--color-text)';
+                }
+            });
+        }
+
+        // Reminder Form
+        document.getElementById('reminderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('reminderEmail').value;
+            
+            if (validateEmail(email)) {
+                // Save reminder (in production, send to backend)
+                showToast('Reminder set! We\'ll notify you at ' + email, 'success');
+                this.reset();
+            } else {
+                showToast('Please enter a valid email address', 'error');
+            }
+        });
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message';
+                                messageDiv.innerHTML = `
+                    <div class="username">You</div>
+                    <div>${message}</div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                chatInput.value = '';
+            }
+        }
+
+        sendChatBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Check live status on page load and every minute
+        checkLiveStatus();
+        setInterval(checkLiveStatus, 60000);
+
+        // Auto-scroll chat messages
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    </script>
+</body>
+</html>
